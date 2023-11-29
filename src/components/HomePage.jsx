@@ -7,6 +7,7 @@ const HomePage = () => {
 
 const [articles, setArticles] = useState([]);
 const [loading, setLoading] = useState(false);
+const [searchNews, setSearchNews] = useState('');
 
 let articleId = '';
 
@@ -35,13 +36,29 @@ if (loading) {
     </div>
 }
 
+
+const handleSearch = (evt) =>{
+    setSearchNews(evt.target.value);
+}
+
+const filteredNews = articles.filter((article) =>
+article.title.toLowerCase().includes(searchNews.toLowerCase())
+);
+
+
 return (
     <div className="container">
         <h1 className="text-center my-3">Today's news</h1>
+        <input className="form-control w-75 mx-auto my-3 py-2" value={searchNews} onChange={handleSearch} placeholder="Search s news..." type="text" />
         <ul className="card-list d-grid gap-4 mb-5">
-            {articles.map((article, index)=>(
-                <NewsCard key={index} data={article}/>
-            ))}
+        {filteredNews.length > 0 ? (
+          filteredNews.map((article, index) => (
+            <NewsCard key={index} data={article} />
+          ))
+        ) : (
+          <div className="text-center mt-5">Not Found!</div>
+        )}
+
         </ul>
     </div>
     )
