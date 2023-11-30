@@ -42,9 +42,11 @@ const handleSearch = (evt) =>{
 }
 
 const filteredNews = articles.filter((article) =>
-article.title.toLowerCase().includes(searchNews.toLowerCase())
+article.title.toLowerCase().includes(searchNews.trim().toLowerCase())
 );
 
+
+console.log(filteredNews);
 
 return (
     <div className="container">
